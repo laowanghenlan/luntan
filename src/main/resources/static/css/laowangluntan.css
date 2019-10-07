@@ -3,6 +3,7 @@ body{
 }
 
 .man{
+    background-color: white;
     margin: 29px;
 }
 
@@ -18,4 +19,8 @@ body{
     font-size: 14px;
     font-weight: normal;
     color: #999;
+}
+.profile.section{
+    margin-top: auto;
+    margin-bottom: auto;
 }
