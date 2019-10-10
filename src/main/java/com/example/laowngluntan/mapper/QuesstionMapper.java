@@ -1,10 +1,8 @@
 package com.example.laowngluntan.mapper;
 
 import com.example.laowngluntan.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 
@@ -24,4 +22,10 @@ public interface QuesstionMapper {
 
     @Select("select  count(1) from  question where creator = #{userId}")
     Integer countByUserId(@Param("userId") Integer userId);
+
+    @Select("select * from question where id = #{id}")
+    Question getById(@Param("id") Integer id);
+    @Update("update question set title = #{title},description = #{description},gmt_modified = #{gmtModified},tag = #{tag} where id = #{id}")
+    void update(Question question);
 }
+//update question set view = view +1 where id = 1;

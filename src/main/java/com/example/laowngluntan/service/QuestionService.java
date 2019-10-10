@@ -2,6 +2,8 @@ package com.example.laowngluntan.service;
 
 import com.example.laowngluntan.dto.PaginationDTO;
 import com.example.laowngluntan.dto.QuestionDTO;
+import com.example.laowngluntan.exception.CustomizeErrorCode;
+import com.example.laowngluntan.exception.CustomizeException;
 import com.example.laowngluntan.mapper.QuesstionMapper;
 import com.example.laowngluntan.mapper.UserMapper;
 import com.example.laowngluntan.model.Question;
@@ -87,5 +89,30 @@ public class QuestionService {
         }
         paginationDTO.setQuestions(questionDTOList);
         return paginationDTO;
+    }
+
+    public QuestionDTO getById(Integer id) {
+        Question question =  quesstionMapper.getById(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUN);
+        }
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        User user = userMapper.findById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if (question.getId() ==null){
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            quesstionMapper.create(question);
+        }else {
+            //更新
+            question.setGmtModified(question.getGmtCreate());
+            quesstionMapper.update(question);
+        }
     }
 }

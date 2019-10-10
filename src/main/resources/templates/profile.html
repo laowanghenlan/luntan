@@ -18,16 +18,16 @@
             <h2><span th:text="${sectionName}"></span></h2>
             <hr>
 
-            <div class="media" th:each="questino : ${pagination.questions}">
+            <div class="media" th:each="question : ${pagination.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" th:src="${questino.user.avatarUrl}"></a>
+                        <img class="media-object img-circle" th:src="${question.user.avatarUrl}"></a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${questino.title}"></h4>
-                    <span class="text-desc"><span th:text="${questino.commentCount}"></span>个回复 。
-                        <span th:text="${questino.view}"></span>
-                        此浏览.<span th:text="${#dates.format(questino.gmtCreate,'yyy-MMM-dd HH:mm')}"></span></span>
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <span class="text-desc"><span th:text="${question.commentCount}"></span>个回复 。
+                        <span th:text="${question.view}"></span>
+                        此浏览.<span th:text="${#dates.format(question.gmtCreate,'yyy-MMM-dd HH:mm')}"></span></span>
                 </div>
             </div>
 

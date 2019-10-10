@@ -3,7 +3,7 @@ body{
 }
 
 .man{
-    background-color: white;
+    background-color: #dff0d8;
     margin: 29px;
 }
 
@@ -20,7 +20,10 @@ body{
     font-weight: normal;
     color: #999;
 }
-.profile.section{
-    margin-top: auto;
-    margin-bottom: auto;
+.bianji-menu{
+    color: #999;
+    font-size: 13px;
+}
+.jumbotron{
+    margin: 50px;
 }
