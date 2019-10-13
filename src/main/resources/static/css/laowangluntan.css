@@ -3,7 +3,7 @@ body{
 }
 
 .man{
-    background-color: #eeeeee;
+    background-color: #f9f9f9;
     margin: 29px;
 }
 
@@ -23,9 +23,14 @@ body{
     font-weight: normal;
     color: #999;
 }
+.question-title{
+    margin-top: 25px;
+}
 .bianji-menu{
+   display: block;
     color: #999;
     font-size: 13px;
+    margin-bottom: 15px;
 }
 .jumbotron{
     margin: 50px;
@@ -39,6 +44,11 @@ body{
 }
 .comment-sp{
     margin-top: 0;
+}
+.comments{
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
 }
 .menu{
     color: #999;

@@ -9,6 +9,7 @@ import com.example.laowngluntan.mapper.QuestionExtMapper;
 import com.example.laowngluntan.mapper.QuestionMapper;
 import com.example.laowngluntan.mapper.UserMapper;
 import com.example.laowngluntan.model.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,8 +61,9 @@ public class CommentService {
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
                  .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+        commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-        if (comments.size() ==0){
+        if (comments.size() == 0){
             return new ArrayList<>();
         }
         //获取去重的评论人
@@ -79,6 +81,7 @@ public class CommentService {
         //转换comment 为 commentDTO
         List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();
+            BeanUtils.copyProperties(comment,commentDTO);
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             return commentDTO;
         }).collect(Collectors.toList());
