@@ -1,7 +1,9 @@
 package com.example.laowngluntan.controller;
 
 import com.example.laowngluntan.dto.CommentCreateDTO;
+import com.example.laowngluntan.dto.CommentDTO;
 import com.example.laowngluntan.dto.ResultDTO;
+import com.example.laowngluntan.enums.CommentTypeEnum;
 import com.example.laowngluntan.exception.CustomizeErrorCode;
 import com.example.laowngluntan.model.Comment;
 import com.example.laowngluntan.model.User;
@@ -9,12 +11,10 @@ import com.example.laowngluntan.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -41,5 +41,11 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return  ResultDTO.okOf();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List> comments(@PathVariable(name = "id")  Long id){
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }
