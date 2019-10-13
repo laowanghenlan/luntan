@@ -3,7 +3,7 @@ body{
 }
 
 .man{
-    background-color: #dff0d8;
+    background-color: #eeeeee;
     margin: 29px;
 }
 
@@ -14,6 +14,9 @@ body{
 .media-object{
     width: 38px;
     height: 38px;
+}
+.media-body{
+    padding-top: 10px;
 }
 .text-desc{
     font-size: 14px;
@@ -26,4 +29,26 @@ body{
 }
 .jumbotron{
     margin: 50px;
+}
+.comment{
+    margin: 10px 0;
+}
+.btn-comment{
+    float: right;
+    margin-bottom: 10px;
+}
+.comment-sp{
+    margin-top: 0;
+}
+.menu{
+    color: #999;
+    margin-top: 5px;
+}
+.menu .icom{
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu .icom:hover{
+    color: #9acfea;
 }
