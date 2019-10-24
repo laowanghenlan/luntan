@@ -1,0 +1,33 @@
+2019-10-24 15:26:22.899  INFO 4232 --- [restartedMain] c.e.l.LaowngluntanApplication            : Starting LaowngluntanApplication on CEV5KJJWHZFJGBU with PID 4232 (F:\laowngluntan\target\classes started by Administrator in F:\laowngluntan)
+2019-10-24 15:26:22.907  INFO 4232 --- [restartedMain] c.e.l.LaowngluntanApplication            : No active profile set, falling back to default profiles: default
+2019-10-24 15:26:23.484  INFO 4232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-10-24 15:26:23.486  INFO 4232 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-10-24 15:26:23.715  WARN 4232 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2019-10-24 15:26:27.053  INFO 4232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-10-24 15:26:27.121  INFO 4232 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 28ms. Found 0 repository interfaces.
+2019-10-24 15:26:28.100  INFO 4232 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$3889a4e2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-24 15:26:29.106  INFO 4232 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8088 (http)
+2019-10-24 15:26:29.222  INFO 4232 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-10-24 15:26:29.223  INFO 4232 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.24]
+2019-10-24 15:26:29.423  INFO 4232 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-10-24 15:26:29.423  INFO 4232 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 5935 ms
+2019-10-24 15:26:30.019  INFO 4232 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-10-24 15:26:30.669  INFO 4232 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-10-24 15:26:30.956  INFO 4232 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-10-24 15:26:31.144  INFO 4232 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.11.Final}
+2019-10-24 15:26:31.153  INFO 4232 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-10-24 15:26:31.912  INFO 4232 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-10-24 15:26:32.315  INFO 4232 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-10-24 15:26:33.058  INFO 4232 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@130d436d'
+2019-10-24 15:26:33.062  INFO 4232 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-10-24 15:26:33.157  INFO 4232 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-10-24 15:26:34.595  INFO 4232 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-24 15:26:34.664  WARN 4232 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-10-24 15:26:34.730  INFO 4232 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2019-10-24 15:26:35.295  INFO 4232 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8088 (http) with context path ''
+2019-10-24 15:26:35.303  INFO 4232 --- [restartedMain] c.e.l.LaowngluntanApplication            : Started LaowngluntanApplication in 14.786 seconds (JVM running for 19.886)
+2019-10-24 15:56:37.618  INFO 4232 --- [http-nio-8088-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-10-24 15:56:37.618  INFO 4232 --- [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-10-24 15:56:37.640  INFO 4232 --- [http-nio-8088-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 22 ms

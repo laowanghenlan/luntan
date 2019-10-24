@@ -3,6 +3,7 @@ package com.example.laowngluntan.interceptor;
 import com.example.laowngluntan.mapper.UserMapper;
 import com.example.laowngluntan.model.User;
 import com.example.laowngluntan.model.UserExample;
+import com.example.laowngluntan.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -11,12 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired                                //拦截器
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -28,7 +32,10 @@ public class SessionInterceptor implements HandlerInterceptor {
                     userExample.createCriteria().andTokenEqualTo(token);
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users.size() != 0) {
-                        request.getSession().setAttribute("user", users.get(0));
+                        HttpSession session = request.getSession();
+                        session.setAttribute("user", users.get(0));
+                        Long unreadCount = notificationService.unreadCount(users.get(0).getId());
+                        session.setAttribute("unreadCount",unreadCount);
                     }
                     break;
                 }

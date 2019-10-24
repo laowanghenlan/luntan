@@ -2,6 +2,7 @@ package com.example.laowngluntan.service;
 
 import com.example.laowngluntan.dto.PaginationDTO;
 import com.example.laowngluntan.dto.QuestionDTO;
+import com.example.laowngluntan.dto.QuestionQueryDTO;
 import com.example.laowngluntan.exception.CustomizeErrorCode;
 import com.example.laowngluntan.exception.CustomizeException;
 import com.example.laowngluntan.mapper.QuestionExtMapper;
@@ -10,13 +11,17 @@ import com.example.laowngluntan.mapper.UserMapper;
 import com.example.laowngluntan.model.Question;
 import com.example.laowngluntan.model.QuestionExample;
 import com.example.laowngluntan.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class QuestionService{
     @Autowired
@@ -27,11 +32,17 @@ public class QuestionService{
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO List(Integer page, Integer size) {
+    public PaginationDTO List(String search, Integer page, Integer size) {
 
+        if (StringUtils.isNotBlank(search)){
+            String[] tags = StringUtils.split(search," ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
         } else {
@@ -46,7 +57,9 @@ public class QuestionService{
         }
         paginationDTO.setPagination(totalPage, page);
         Integer offset = size * (page - 1);
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
 
 
@@ -57,7 +70,7 @@ public class QuestionService{
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
@@ -99,7 +112,7 @@ public class QuestionService{
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         return paginationDTO;
     }
 
@@ -146,5 +159,24 @@ public class QuestionService{
         question.setId(id);
         question.setView(1);
         questionExtMapper.incView(question);
+    }
+
+    public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
+        if (StringUtils.isBlank(queryDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String[] tags = StringUtils.split(queryDTO.getTag(),",");
+        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        Question question = new Question();
+        question.setId(queryDTO.getId());
+        question.setTag(regexpTag);
+
+        List<Question> questions = questionExtMapper.selectRelated(question);
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q,questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOS;
     }
 }
