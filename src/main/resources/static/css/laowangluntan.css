@@ -1,9 +1,9 @@
 body{
-    background-color: #efefef;
+    background-color: #d9edf7;
 }
 
 .man{
-    background-color: #f9f9f9;
+    background-color: lightgoldenrodyellow;
     margin: 29px;
 }
 
@@ -32,7 +32,7 @@ body{
 }
 .question-related{
     line-height: 23px;
-    font-size: 18px;
+    font-size: 14px;
     padding-left: 0;
     list-style: none;
 }

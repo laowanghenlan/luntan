@@ -74,7 +74,6 @@ public class QuestionService{
         return paginationDTO;
     }
 
-
     public PaginationDTO list(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
