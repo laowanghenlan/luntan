@@ -38,6 +38,10 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
+<<<<<<< HEAD
+=======
+                      
+>>>>>>> 5b96d4071b84e6c9b3af2ad83d6d62ac777623ea
                         <a th:href="@{https://github.com/login/oauth/authorize(client_id='03d09c72875ab249c034',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登录</a>
                     </li>
 
