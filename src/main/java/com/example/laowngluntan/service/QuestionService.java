@@ -32,16 +32,22 @@ public class QuestionService{
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO List(String search, Integer page, Integer size) {
+    public PaginationDTO list(String search, String tag, String sort, Integer page, Integer size) {
 
-        if (StringUtils.isNotBlank(search)){
-            String[] tags = StringUtils.split(search," ");
-            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        if (StringUtils.isNotBlank(search)) {
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays
+                    .stream(tags)
+                    .filter(StringUtils::isNotBlank)
+                    .map(t -> t.replace("+", "").replace("*", "").replace("?", ""))
+                    .filter(StringUtils::isNotBlank)
+                    .collect(Collectors.joining("|"));
         }
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
         QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
         questionQueryDTO.setSearch(search);
+
         Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
@@ -52,11 +58,11 @@ public class QuestionService{
         if (page < 1){
             page = 1 ;
         }
-        if (page >totalPage){
-            page =totalPage;
+        if (page > totalPage){
+            page = totalPage;
         }
         paginationDTO.setPagination(totalPage, page);
-        Integer offset = size * (page - 1);
+        Integer offset = page < 1 ? 0 : size * (page - 1);
         questionQueryDTO.setSize(size);
         questionQueryDTO.setPage(offset);
         List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
@@ -80,7 +86,7 @@ public class QuestionService{
 
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
-                       .andCreatorEqualTo(userId);
+                .andCreatorEqualTo(userId);
         Integer totalCount = (int) questionMapper.countByExample(questionExample);
         if (totalCount % size == 0) {
             totalPage = totalCount / size;
@@ -137,7 +143,17 @@ public class QuestionService{
             question.setCommentCount(0);
             questionMapper.insert(question);
         }else {
-            //更新
+            // 更新
+
+            Question dbQuestion = questionMapper.selectByPrimaryKey(question.getId());
+            if (dbQuestion == null) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUN);
+            }
+
+            if (dbQuestion.getCreator().longValue() != question.getCreator().longValue()) {
+                throw new CustomizeException(CustomizeErrorCode.INVALID_OPERATION);
+            }
+
             Question updateQuestion = new Question();
             updateQuestion.setGmtModified(System.currentTimeMillis());
             updateQuestion.setTitle(question.getTitle());
@@ -146,8 +162,8 @@ public class QuestionService{
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            int update = questionMapper.updateByExampleSelective(updateQuestion,example);
-            if (update != 1 ){
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if (updated != 1) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUN);
             }
         }
@@ -164,8 +180,13 @@ public class QuestionService{
         if (StringUtils.isBlank(queryDTO.getTag())){
             return new ArrayList<>();
         }
-        String[] tags = StringUtils.split(queryDTO.getTag(),",");
-        String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        String[] tags = StringUtils.split(queryDTO.getTag(), ",");
+        String regexpTag = Arrays
+                .stream(tags)
+                .filter(StringUtils::isNotBlank)
+                .map(t -> t.replace("+", "").replace("*", "").replace("?", ""))
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.joining("|"));
         Question question = new Question();
         question.setId(queryDTO.getId());
         question.setTag(regexpTag);
@@ -173,9 +194,10 @@ public class QuestionService{
         List<Question> questions = questionExtMapper.selectRelated(question);
         List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
             QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(q,questionDTO);
+            BeanUtils.copyProperties(q, questionDTO);
             return questionDTO;
         }).collect(Collectors.toList());
         return questionDTOS;
     }
+
 }

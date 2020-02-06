@@ -10,7 +10,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     CONTENT_IS_EMPTY(2007,"输入内容不能为空"),
     READ_NOTIFICATION_FAIL(2008,"兄弟，你系不系黑客？系的话加个扣扣呗交流交流，1985680256"),
     NOTIFICATION_NOT_FOUND(2009,"消息莫非是长翅膀飞走了？"),
-    FILE_UPLOAD_FAIL(2010,"图片上传失败")
+    FILE_UPLOAD_FAIL(2010,"图片上传失败"),
+    INVALID_OPERATION(2012, "兄弟，是不是走错房间了？"),
     ;
     @Override
     public String getMessage() {
