@@ -20,7 +20,7 @@ public class PaginationDTO<T> {
     this.page = page;
         pages.add(page);
         for (int i= 1; i<= 3; i++){
-            if (page -i > 0){
+            if (page - i > 0){
                 pages.add(0,page - i);
             }
             if (page + i <= totalPage){
